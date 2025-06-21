@@ -6,6 +6,8 @@ import About from "./AboutPage/about";
 import SkillsAndTools from "./ToolsPage/skillsAndTools";
 import ProjectPage from "./ProjectPage/project";
 import Experience from "./ExperiencePage/experience";
+import Contact from "./ContactPage/contact";
+import Footer from "./footer";
 
 function App() {
   return (
@@ -36,9 +38,10 @@ function App() {
       {/* Experience End */}
 
       {/* Contact Me Start */}
-      {/* Add your Contact Me section here */}
+      <Contact />
       {/* Contact Me End */}
-      {/* Home End */}
+
+      <Footer />
     </>
   );
 }

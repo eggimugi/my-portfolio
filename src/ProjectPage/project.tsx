@@ -40,14 +40,14 @@ export default function ProjectPage() {
       <div className="relative flex flex-col items-center w-full max-w-6xl">
         {/* Selected Works line and dots */}
         <div className="flex items-center mb-4">
-                    <div className="border border-black/60 rounded-md px-6 py-2 text-xl font-normal relative">
-                        Selected Works
-                        <span className="absolute -top-2 -left-1.5 w-3 h-3 rounded-full bg-black"></span>
-                        <span className="absolute -top-2 -right-1.5 w-3 h-3 rounded-full bg-black"></span>
-                        <span className="absolute -bottom-2 -left-1.5 w-3 h-3 rounded-full bg-black"></span>
-                        <span className="absolute -bottom-2 -right-1.5 w-3 h-3 rounded-full bg-black"></span>
-                    </div>
-                </div>
+          <div className="border border-black/60 rounded-md px-6 py-2 text-xl font-normal relative">
+            Selected Works
+            <span className="absolute -top-2 -left-1.5 w-3 h-3 rounded-full bg-black"></span>
+            <span className="absolute -top-2 -right-1.5 w-3 h-3 rounded-full bg-black"></span>
+            <span className="absolute -bottom-2 -left-1.5 w-3 h-3 rounded-full bg-black"></span>
+            <span className="absolute -bottom-2 -right-1.5 w-3 h-3 rounded-full bg-black"></span>
+          </div>
+        </div>
         {/* Title */}
         <h1 className="text-4xl md:text-5xl font-extrabold text-center mt-2">
           <span className="text-black">WebDev</span>{" "}

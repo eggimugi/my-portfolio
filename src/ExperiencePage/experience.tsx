@@ -1,4 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import clsx from "clsx";
+import profile from "../assets/profile_bg.jpg"; 
 
 interface ExperienceItem {
   title: string;
@@ -9,19 +11,37 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
-    title: "Junior BackEnd Programmer | Telkom DigiUp",
+    title: "Aunior BackEnd Programmer | Telkom DigiUp",
     certificate: "Certificate of Junior BackEnd Programmer",
-    image: "/images/experience1.jpg",
+    image: profile,
     details: "Details",
   },
   {
-    title: "Junior BackEnd Programmer | Telkom DigiUp",
+    title: "Bunior BackEnd Programmer | Telkom DigiUp",
     certificate: "Certificate of Junior BackEnd Programmer",
     image: "/images/experience2.jpg",
     details: "Details",
   },
   {
-    title: "Junior BackEnd Programmer | Telkom DigiUp",
+    title: "Cunior BackEnd Programmer | Telkom DigiUp",
+    certificate: "Certificate of Junior BackEnd Programmer",
+    image: "/images/experience3.jpg",
+    details: "Details",
+  },
+  {
+    title: "Dunior BackEnd Programmer | Telkom DigiUp",
+    certificate: "Certificate of Junior BackEnd Programmer",
+    image: "/images/experience3.jpg",
+    details: "Details",
+  },
+  {
+    title: "Eunior BackEnd Programmer | Telkom DigiUp",
+    certificate: "Certificate of Junior BackEnd Programmer",
+    image: "/images/experience3.jpg",
+    details: "Details",
+  },
+  {
+    title: "Funior BackEnd Programmer | Telkom DigiUp",
     certificate: "Certificate of Junior BackEnd Programmer",
     image: "/images/experience3.jpg",
     details: "Details",
@@ -29,25 +49,45 @@ const experiences: ExperienceItem[] = [
 ];
 
 export default function Experience() {
-  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardWidth = 320; // width of each card (px), kamu bisa sesuaikan
-  const gap = 24; // gap antar card (px)
-
-  const next = () => {
-    setActiveIndex((prev) => (prev + 1) % experiences.length);
-  };
-
-  const prev = () => {
-    setActiveIndex(
-      (prev) => (prev - 1 + experiences.length) % experiences.length
-    );
-  };
+  const [cardsPerView, setCardsPerView] = useState(3);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(next, 3000);
-    return () => clearInterval(interval);
+    const updateCardsPerView = () => {
+      const width = containerRef.current?.offsetWidth || 0;
+      const cardMinWidth = 320;
+      const fit = Math.floor(width / cardMinWidth);
+      setCardsPerView(Math.min(3, Math.max(1, fit)));
+    };
+
+    updateCardsPerView();
+    const observer = new ResizeObserver(updateCardsPerView);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
+
+  const total = experiences.length;
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % total);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  // Get visible items with wrap-around logic
+  const getVisibleItems = () => {
+    const visible: ExperienceItem[] = [];
+    for (let i = cardsPerView - 1; i >= 0; i--) {
+      const idx = (activeIndex - i + total) % total;
+      visible.push(experiences[idx]);
+    }
+    return visible;
+  };
+
+  const visibleItems = getVisibleItems();
 
   return (
     <div className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center md:px-24 sm:px-10 px-8 py-16 overflow-hidden">
@@ -60,7 +100,7 @@ export default function Experience() {
 
       {/* Content */}
       <div className="relative z-10 w-full flex flex-col items-center md:items-start">
-        {/* "Things I'm Proud Of" */}
+        {/* Heading */}
         <div className="flex items-center mb-4">
           <div className="border border-white/60 rounded-md px-6 py-2 text-xl font-light relative">
             Things I’m Proud Of
@@ -71,13 +111,11 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Heading */}
         <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-center md:text-left">
           Whoa, you’re still scrolling?{" "}
           <span className="text-white">I like that.</span>
         </h2>
 
-        {/* Description */}
         <p className="text-base md:text-lg text-white/90 mb-10 text-center md:text-left max-w-4xl">
           This part’s all about where I’ve been and what I’ve done — the
           hands-on stuff that helped me grow as a developer and a person.
@@ -86,76 +124,53 @@ export default function Experience() {
         </p>
 
         {/* Carousel Navigation */}
-        <div className="relative w-full flex flex-col items-center overflow-hidden">
-          {/* Carousel Area */}
-          <div className="w-full overflow-hidden">
-            <div
-              ref={containerRef}
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(calc(-${activeIndex} * (${cardWidth}px + ${gap}px)))`,
-              }}
-            >
-              {experiences.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/5 text-white rounded-xl shadow-lg overflow-hidden mx-3"
-                  style={{
-                    minWidth: `${cardWidth}px`,
-                    maxWidth: `${cardWidth}px`,
-                  }}
-                >
-                  <img
-                    src={exp.image}
-                    alt={exp.title}
-                    className="w-full h-60 object-cover object-center"
-                  />
-                  <div className="p-4">
-                    <div className="font-semibold text-sm mb-1">
-                      {exp.title}
+        <div className="relative w-full flex justify-center items-center">
+          {/* Prev Button */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 z-20 px-3 py-2 text-white bg-white/10 hover:bg-white/20 rounded-full"
+          >
+            ◀
+          </button>
+
+          {/* Experience Cards */}
+          <div ref={containerRef} className="overflow-hidden">
+            <div className="flex gap-6 transition-all duration-300 ease-in-out">
+              {visibleItems.map((exp, idx) => {
+                const isActive = idx === visibleItems.length - 1;
+                return (
+                  <div
+                    key={`${exp.title}-${idx}`}
+                    className={clsx(
+                      "bg-white/5 rounded-xl overflow-hidden min-w-[420px] max-w-xs w-full transition-all duration-300",
+                      isActive ? "scale-105 z-10" : "scale-95 opacity-70"
+                    )}
+                  >
+                    <img
+                      src={exp.image}
+                      alt={exp.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-bold">{exp.title}</h3>
+                      <p className="text-sm text-white/60">{exp.certificate}</p>
+                      <button className="mt-2 text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20">
+                        {exp.details}
+                      </button>
                     </div>
-                    <div className="text-xs text-white/70 mb-2">
-                      {exp.certificate}
-                    </div>
-                    <button className="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-3 py-1 rounded hover:bg-white/20 transition">
-                      {exp.details}
-                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
-          {/* Dots */}
-          <div className="flex gap-2 mt-4">
-            {experiences.map((_, idx) => (
-              <span
-                key={idx}
-                className={`w-2 h-2 rounded-full cursor-pointer ${
-                  idx === activeIndex ? "bg-white" : "bg-white/40"
-                }`}
-                onClick={() => setActiveIndex(idx)}
-              />
-            ))}
-          </div>
-
-          {/* Buttons */}
-          <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
-            <button
-              onClick={prev}
-              className="text-white px-3 py-2 bg-white/10 hover:bg-white/20 rounded-full"
-            >
-              ◀
-            </button>
-          </div>
-          <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
-            <button
-              onClick={next}
-              className="text-white px-3 py-2 bg-white/10 hover:bg-white/20 rounded-full"
-            >
-              ▶
-            </button>
-          </div>
+          {/* Next Button */}
+          <button
+            onClick={handleNext}
+            className="absolute right-0 z-20 px-3 py-2 text-white bg-white/10 hover:bg-white/20 rounded-full"
+          >
+            ▶
+          </button>
         </div>
       </div>
     </div>
