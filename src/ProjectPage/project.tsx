@@ -89,7 +89,7 @@ const projects: Project[] = [
       "I built another jobseeker website with improved features and user experience.",
     image: jobseekerWebsite,
     links: {
-      github: "#",
+      github: "https://github.com/eggimugi/jobseeker",
     },
   },
 ];
