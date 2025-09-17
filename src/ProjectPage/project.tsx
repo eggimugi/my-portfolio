@@ -1,4 +1,4 @@
-import cinemaDB from "../assets/cinemaDB.png";
+import cinemaDB from "../assets/CinemaDB.png";
 import reogPonorogo from "../assets/reogPonorogo.png";
 import jobseeker from "../assets/jobseeker.png";
 import jobseekerWebsite from "../assets/jobseekerWebsite.png";
