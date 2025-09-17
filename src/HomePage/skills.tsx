@@ -7,7 +7,6 @@ import javascripticons from "../assets/SkillsLogo/javascript-logo.svg";
 import labviewicons from "../assets/SkillsLogo/labview-logo.svg";
 import mysqlicons from "../assets/SkillsLogo/mysql-logo.svg";
 import nexticons from "../assets/SkillsLogo/nextjs-logo.svg";
-import photoshopicons from "../assets/SkillsLogo/photoshop-logo.svg";
 import prismaicons from "../assets/SkillsLogo/prisma-logo.svg";
 import reacticons from "../assets/SkillsLogo/react-logo.svg";
 import tailwindicons from "../assets/SkillsLogo/tailwindcss.svg";
@@ -26,7 +25,6 @@ const skills = [
   { name: "JavaScript", icon: javascripticons, color: "#F7DF1E" },
   { name: "HTML", icon: htmlicons, color: "#E34F26" },
   { name: "CSS", icon: cssicons, color: "#1572B6" },
-  { name: "Photoshop", icon: photoshopicons, color: "#31A8FF" },
   { name: "LabVIEW", icon: labviewicons, color: "#FFC20E" },
 ];
 

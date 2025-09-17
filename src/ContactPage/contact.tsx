@@ -1,8 +1,41 @@
 import React from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 
 const Contact: React.FC = () => {
+  const [status, setStatus] = useState<"SUCCESS" | "ERROR" | "">("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+    };
+
+    try {
+      const res = await fetch("https://formspree.io/f/xblavyzk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus("SUCCESS");
+        form.reset(); // reset form setelah sukses
+      } else {
+        setStatus("ERROR");
+      }
+    } catch (err) {
+      setStatus("ERROR");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-between  md:px-24 sm:px-10 px-8 py-16">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-between md:px-24 sm:px-10 px-8 py-16">
       {/* Left: Contact Form */}
       <div className="border rounded-lg flex-1 max-w-2xl p-8 md:mr-8 mb-8 md:mb-0 order-2 md-order-1">
         <h2 className="text-2xl font-bold mb-2">Let’s get in touch.</h2>
@@ -10,7 +43,7 @@ const Contact: React.FC = () => {
           Have a project in mind or just want to say hi? Feel free to drop a
           message!
         </p>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
               <label className="block text-xs font-bold mb-1 text-gray-500">
@@ -18,6 +51,7 @@ const Contact: React.FC = () => {
               </label>
               <input
                 type="text"
+                name="name"
                 className="w-full border-b border-gray-300 bg-transparent outline-none py-1 text-sm"
                 placeholder="Ex. John Doe"
               />
@@ -28,6 +62,7 @@ const Contact: React.FC = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 className="w-full border-b border-gray-300 bg-transparent outline-none py-1 text-sm"
                 placeholder="Ex. johndoe@mail.com"
               />
@@ -38,6 +73,7 @@ const Contact: React.FC = () => {
               Message
             </label>
             <textarea
+              name="message"
               className="w-full border-b border-gray-300 bg-transparent outline-none py-1 text-sm resize-none"
               rows={3}
               placeholder="Write your message here"
@@ -45,15 +81,27 @@ const Contact: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="bg-black text-white text-xs px-6 py-2 rounded hover:bg-gray-800 transition"
+            className="bg-black text-white px-6 py-2 rounded hover:bg-transparent hover:border hover:text-black cursor-pointer transition"
           >
             Send message
           </button>
+
+          {status && (
+            <p
+              className={`text-sm mt-2 ${
+                status === "SUCCESS" ? "text-black" : "text-red-600"
+              }`}
+            >
+              {status === "SUCCESS"
+                ? "Message sent!"
+                : "❌ Something went wrong."}
+            </p>
+          )}
         </form>
       </div>
 
       {/* Right: Contact Info */}
-      <div className="flex-1 flex flex-col justify-start max-w-xl order-1 md:order-2">
+      <div className="flex-1 flex flex-col justify-start max-w-xl mb-5 order-1 md:order-2">
         <div className="relative flex items-center mb-6">
           <div className="flex items-center mb-4">
             <div className="border border-black/60 rounded-md px-6 py-2 text-xl font-normal relative">
@@ -72,7 +120,7 @@ const Contact: React.FC = () => {
           If anything here caught your eye, let’s talk! I’m always up for new
           ideas, fun projects, or just a good convo.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           <div className="mb-6">
             <div className="mb-2 font-bold text-sm">Let’s talk</div>
             <div className="text-xs text-gray-700">+62 857 4925 7423</div>
@@ -89,7 +137,9 @@ const Contact: React.FC = () => {
             <div className="mb-2 font-bold text-sm">Find me online</div>
             <div className="flex space-x-3">
               <a
-                href="#"
+                href="https://www.instagram.com/e.eggi_/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="text-black hover:text-gray-700"
               >
@@ -102,20 +152,9 @@ const Contact: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="#"
-                aria-label="Twitter"
-                className="text-black hover:text-gray-700"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M22.46 6c-.77.35-1.6.58-2.47.69a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.7c-.37.64-.58 1.39-.58 2.19 0 1.51.77 2.84 1.94 3.62a4.28 4.28 0 0 1-1.94-.54v.05c0 2.11 1.5 3.87 3.5 4.27-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08.54 1.68 2.11 2.9 3.97 2.93A8.6 8.6 0 0 1 2 19.54a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.37-.01-.56A8.7 8.7 0 0 0 24 4.59a8.5 8.5 0 0 1-2.54.7z" />
-                </svg>
-              </a>
-              <a
-                href="#"
+                href="https://www.linkedin.com/in/eggimugi/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="text-black hover:text-gray-700"
               >
@@ -128,7 +167,9 @@ const Contact: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://github.com/eggimugi"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="GitHub"
                 className="text-black hover:text-gray-700"
               >

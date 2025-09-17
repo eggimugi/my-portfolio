@@ -16,30 +16,42 @@ function App() {
       <Navbar />
       {/* Navbar End */}
 
-      {/* Home Start */}
-      <Hero />
-      <SkillsWalkThrough />
-      {/* Home End */}
+      <main>
+        {/* Home Start */}
+          <Hero />
+          <SkillsWalkThrough />
+        {/* Home End */}
 
-      {/* About Me Start */}
-      <About />
-      {/* About Me End */}
+        {/* About Me Start */}
+        <section id="about">
+          <About />
+        </section>
+        {/* About Me End */}
 
-      {/* Skills & Tools Start */}
-      <SkillsAndTools />
-      {/* Skills & Tools End */}
+        {/* Skills & Tools Start */}
+        <section id="skillsTools">
+          <SkillsAndTools />
+        </section>
+        {/* Skills & Tools End */}
 
-      {/* Projects Start */}
-      <ProjectPage />
-      {/* Projects End */}
+        {/* Projects Start */}
+        <section id="projects">
+          <ProjectPage />
+        </section>
+        {/* Projects End */}
 
-      {/* Experience Start */}
-      <Experience />
-      {/* Experience End */}
+        {/* Experience Start */}
+        <section id="experience">
+          <Experience />
+        </section>
+        {/* Experience End */}
 
-      {/* Contact Me Start */}
-      <Contact />
-      {/* Contact Me End */}
+        {/* Contact Me Start */}
+        <section id="contactMe">
+          <Contact />
+        </section>
+        {/* Contact Me End */}
+      </main>
 
       <Footer />
     </>

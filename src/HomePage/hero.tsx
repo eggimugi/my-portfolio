@@ -1,4 +1,4 @@
-import profile from "../assets/profile.svg";
+import profile from "../assets/eggsmugs.png";
 
 export default function Hero() {
   return (
@@ -34,20 +34,20 @@ export default function Hero() {
             <img
               src={profile}
               alt="Profile"
-              className="sm:absolute top-[26vw] sm:-translate-y-1/2 w-[60vw] grayscale z-10"
+              className="sm:absolute top-[25vw] sm:-translate-y-1/2 w-[57vw] grayscale z-10"
             />
           </div>
 
           {/* Tombol */}
           <div className="flex flex-col sm:flex-row gap-4 sm:mb-12 sm:w-auto w-full z-20">
             <a
-              href="#work"
-              className="bg-black text-white px-6 sm:px-8 py-3 rounded-md text-sm font-medium shadow hover:bg-gray-900 transition text-center"
+              href="#projects"
+              className="bg-black text-white px-6 sm:px-8 py-3 rounded-md text-sm font-medium shadow hover:bg-white hover:text-black transition text-center"
             >
               See My Work
             </a>
             <a
-              href="#contact"
+              href="#contactMe"
               className="border border-black sm:border-none text-black px-6 sm:px-8 py-3 rounded-md font-medium shadow transition bg-transparent sm:bg-white xs:hover:bg-black xs:hover:text-white text-center"
             >
               Let’s Talk

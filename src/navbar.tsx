@@ -5,7 +5,7 @@ import logo from "./assets/logo-eggi.svg";
 export default function Navbar() {
   const menuItems = [
     { label: "Home", href: "#" },
-    { label: "About Me", href: "https://www.youtube.com" },
+    { label: "About Me", href: "#about" },
     { label: "Skills & Tools", href: "#skillsTools" },
     { label: "Projects", href: "#projects" },
     { label: "Experience", href: "#experience" },
@@ -58,7 +58,7 @@ export default function Navbar() {
       >
         {/* Top bar: Logo & Hamburger */}
         <div className="flex justify-between items-center">
-          <a href="#home">
+          <a href="#">
             <img src={logo} alt="MyLogo" className="h-10" />
           </a>
 
@@ -97,7 +97,7 @@ export default function Navbar() {
           <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 md:space-x-10 text-white md:text-black">
             {menuItems.map(({ label, href }) => (
               <li key={href}>
-                <a href={href} className="hover:underline">
+                <a href={href} className="hover:underline hover:text-black">
                   {label}
                 </a>
               </li>
